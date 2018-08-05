@@ -12,6 +12,11 @@ module Rxdt
 
     def apply(transform)
       result = Rxdt::Document.new(@xml.to_s)
+
+      transform.actions.each do |act|
+        act.execute result
+      end
+
       result
     end
 

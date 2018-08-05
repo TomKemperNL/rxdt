@@ -16,9 +16,13 @@ module Rxdt
         raise RxdtError.new("XDT requires a root element")
       end
 
-      if @doc.root.namespaces.values.none? { |n| n == "http://schemas.microsoft.com/XML-Document-Transform" }
+      if @doc.root.namespaces.values.none? { |n| n == SCHEMA }
         raise RxdtError.new("XDT requires the XDT namespace (\"http://schemas.microsoft.com/XML-Document-Transform\")")
       end
+    end
+
+    def actions
+      REXML::XPath.each(@doc.root, "//*[@xdt:Transform]", {"xdt" => SCHEMA}).map { |el| Rxdt::Actions::Action.from_element el }
     end
   end
 end
