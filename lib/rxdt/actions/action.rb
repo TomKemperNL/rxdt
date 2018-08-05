@@ -21,6 +21,12 @@ module Rxdt::Actions
 
     def initialize(element)
       @element = element
+      @ns = (@element.namespaces.select { |k, v| v == Rxdt::SCHEMA }).keys.first
+    end
+
+    def clean_node(node)
+      node.attributes.delete_all "#{@ns}:Transform"
+      node.attributes.delete_all "#{@ns}:Locator"
     end
 
     def xpath_query_for_parent

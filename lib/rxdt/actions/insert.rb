@@ -3,7 +3,7 @@ module Rxdt::Actions
     def execute(result)
       target = REXML::XPath.first(result, xpath_query_for_parent)
       clone = @element.deep_clone()
-      clone.delete_attribute("Transform")
+      clean_node clone
 
       target.add_element(clone)
       target
