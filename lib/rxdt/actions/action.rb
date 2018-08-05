@@ -38,7 +38,7 @@ module Rxdt::Actions
         query = "/" + locator.xpath_query + query
 
         break if node == @element.document.root || node.parent.nil?
-        node = @element.parent
+        node = node.parent
       end
 
       query

@@ -6,6 +6,7 @@ require "rxdt/document"
 
 require "rxdt/locators/locator"
 require "rxdt/locators/implicit"
+require "rxdt/locators/match"
 
 require "rxdt/actions/action"
 require "rxdt/actions/insert"
