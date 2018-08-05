@@ -24,6 +24,13 @@ module Rxdt
     if ARGV.length < 2
       self.display_help()
     end
+
+    doc = Rxdt::Document.new File.read(ARGV[0])
+    transform = Rxdt::Transform.new File.read(ARGV[1])
+
+    result = doc.apply transform
+
+    puts result.inspect()
   end
 
   def self.display_help
