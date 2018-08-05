@@ -12,6 +12,12 @@ RSpec.describe Rxdt::Document do
     expect(source).to eq result
   end
 
+  it "ignores insignificant whitespace" do
+    source = Rxdt::Document.new "<root>  <someElement>bla</someElement>  </root>"
+    result = Rxdt::Document.new "<root><someElement> bla</someElement></root>"
+    expect(source).to eq result
+  end
+
   it "does not equal nil" do
     source = Rxdt::Document.new "<root><someElement>bla</someElement></root>"
     expect(source).to_not eq nil

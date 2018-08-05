@@ -3,21 +3,24 @@ module Rxdt
     attr_reader :xml
 
     def initialize(xml)
-      if (File.file? xml)
-        @xml = File.read xml
-      else
-        @xml = xml
-      end
+      @xml = REXML::Document.new xml
     end
 
     def apply(transform)
-      result = Rxdt::Document.new(@xml.to_s)
+      result = REXML::Document.new (@xml.to_s)
 
       transform.actions.each do |act|
         act.execute result
       end
 
-      result
+      Document.new(result.to_s)
+    end
+
+    def inspect
+      writer = REXML::Formatters::Pretty.new()
+      formatted = ""
+      formatted = writer.write(@xml.root, formatted)
+      "\n" + formatted
     end
 
     def ==(other)
@@ -25,7 +28,16 @@ module Rxdt
         return false
       end
 
-      return @xml == other.xml
+      writer = REXML::Formatters::Pretty.new()
+      def writer.write_text(node, output)
+        super(node.to_s.strip, output)
+      end
+
+      formatted = ""
+      otherFormatted = ""
+      writer.write(@xml, formatted)
+      writer.write(other.xml, otherFormatted)
+      return formatted == otherFormatted
     end
   end
 end

@@ -22,5 +22,27 @@ module Rxdt::Actions
     def initialize(element)
       @element = element
     end
+
+    def xpath_query_for_parent
+      query = ""
+      node = @element.parent
+
+      loop do
+        query = "/" + node.name + query
+
+        break if node == @element.document.root || node.parent.nil?
+        node = @element.parent
+      end
+
+      query
+    end
+
+    def xpath_query
+      if @element == @element.document.root
+        "/" + @element.name
+      else
+        xpath_query_for_parent + "/" + @element.name
+      end
+    end
   end
 end
