@@ -34,7 +34,8 @@ module Rxdt::Actions
       node = @element.parent
 
       loop do
-        query = "/" + node.name + query
+        locator = Rxdt::Locators::Locator.from_element(node)
+        query = "/" + locator.xpath_query + query
 
         break if node == @element.document.root || node.parent.nil?
         node = @element.parent
@@ -47,7 +48,8 @@ module Rxdt::Actions
       if @element == @element.document.root
         "/" + @element.name
       else
-        xpath_query_for_parent + "/" + @element.name
+        locator = Rxdt::Locators::Locator.from_element(@element)
+        xpath_query_for_parent + "/" + locator.xpath_query
       end
     end
   end

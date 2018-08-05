@@ -3,6 +3,10 @@ require "rexml/document"
 require "rxdt/version"
 require "rxdt/transform"
 require "rxdt/document"
+
+require "rxdt/locators/locator"
+require "rxdt/locators/implicit"
+
 require "rxdt/actions/action"
 require "rxdt/actions/insert"
 require "rxdt/actions/remove"
